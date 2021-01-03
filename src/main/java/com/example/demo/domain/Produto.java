@@ -7,31 +7,38 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Categoria implements Serializable {
+public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    private double preco;
 
-    @ManyToMany(mappedBy = "categorias")
-    private List<Produto> produtos = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name="produto_categoria",
+            joinColumns = @JoinColumn(name="produto_id"),
+            inverseJoinColumns = @JoinColumn(name="categoria_id")
+    )
+    private List <Categoria> categorias = new ArrayList<>();
 
-    public List<Produto> getProdutosList() {
-        return produtos;
-    }
-
-    public void setProdutosList(List<Produto> produtosList) {
-        this.produtos = produtosList;
-    }
-
-    public Categoria(){
+    public Produto(){
 
     }
 
-    public Categoria(String nome, Integer id){
+    public Produto(Integer id, String nome, Double preco){
+        this.id = id;
         this.nome = nome;
+        this.preco = preco;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,12 +50,20 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public Integer getId() {
-        return id;
+    public double getPreco() {
+        return preco;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public List<Categoria> getCategoriasList() {
+        return categorias;
+    }
+
+    public void setCategoriasList(List<Categoria> categoriasList) {
+        this.categorias = categoriasList;
     }
 
     @Override
@@ -60,7 +75,7 @@ public class Categoria implements Serializable {
             return false;
         if(this.getClass() != o.getClass())
             return false;
-        Categoria other = (Categoria) o;
+        Produto other = (Produto) o;
         if(this.id == null) {
             if(other.id != null){
                 return false;
