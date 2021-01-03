@@ -1,8 +1,12 @@
 package com.example.demo;
 
 import com.example.demo.domain.Categoria;
+import com.example.demo.domain.Cidade;
+import com.example.demo.domain.Estado;
 import com.example.demo.domain.Produto;
 import com.example.demo.repositories.CategoriaRepository;
+import com.example.demo.repositories.CidadeRepository;
+import com.example.demo.repositories.EstadoRepository;
 import com.example.demo.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +24,12 @@ public class DemoApplication implements CommandLineRunner {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private EstadoRepository estadoRepository;
+
+    @Autowired
+    private CidadeRepository cidadeRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
@@ -43,6 +53,15 @@ public class DemoApplication implements CommandLineRunner {
 
         this.categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         this.produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+
+        Estado e = new Estado(null, "Rio de Janeiro");
+        Cidade c = new Cidade(null, "Rio de Janeiro", e);
+
+        e.getCidades().addAll(Arrays.asList(c));
+
+        this.estadoRepository.saveAll(Arrays.asList(e));
+        this.cidadeRepository.saveAll(Arrays.asList(c));
+
     }
 
 }
