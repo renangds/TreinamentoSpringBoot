@@ -22,7 +22,7 @@ public class CategoriaResource {
     private CategoriaService categoriaService;
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Optional<Categoria>> find(@PathVariable Integer id){
+    public ResponseEntity<Categoria> find(@PathVariable Integer id){
         return ResponseEntity
                 .ok(this.categoriaService.getCategoria(id));
     }
