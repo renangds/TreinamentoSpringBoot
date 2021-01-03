@@ -27,27 +27,22 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String...args){
-        Produto p1 = new Produto(null, "Impressora", 800.00);
-        Produto p2 = new Produto(null, "Mouse", 250.00);
-        Produto p3 = new Produto(null, "Grampeador", 55.00);
-
         Categoria cat1 = new Categoria("Informática", null);
-        Categoria cat2 = new Categoria("Escritório", null);
+        Categoria cat2 = new Categoria("Papelaria", null);
 
-        cat1.getProdutosList().addAll(Arrays.asList(p1, p2));
-        cat2.getProdutosList().addAll(Arrays.asList(p3));
+        Produto p1 = new Produto("Impressora", 800.00, null );
+        Produto p2 = new Produto("Notebook", 3000.00, null );
+        Produto p3 = new Produto("Memória 8GB", 150.00, null);
 
-        p1.getCategoriasList().addAll(Arrays.asList(cat1));
-        p2.getCategoriasList().addAll(Arrays.asList(cat1, cat2));
-        p3.getCategoriasList().addAll(Arrays.asList(cat1));
+        cat1.getListProduto().addAll(Arrays.asList(p1, p2, p3));
+        cat2.getListProduto().addAll(Arrays.asList(p1));
 
-        this.categoriaRepository.saveAll(
-                Arrays.asList(cat1, cat2)
-        );
+        p1.getCategoriaList().addAll(Arrays.asList(cat1, cat2));
+        p2.getCategoriaList().addAll(Arrays.asList(cat2));
+        p2.getCategoriaList().addAll(Arrays.asList(cat2));
 
-        this.produtoRepository.saveAll(
-                Arrays.asList(p1, p2, p3)
-        );
+        this.categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+        this.produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
     }
 
 }
